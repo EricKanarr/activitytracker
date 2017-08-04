@@ -40,14 +40,6 @@ passport.use(new BasicStrategy(
   }
 ));
 
-// var user = User.findOne({username: "Ethan"}, function(err, user){
-//   user.password = 'test';
-//   user.save(function(err){
-//     if (err) {return console.log('user not saved')}
-//     console.log('user saved!')
-//   })
-// });
-
 app.get('/api/auth',
   passport.authenticate('basic', {session: false}), function (req, res) {
       res.send('You have been authenticated, ' + req.user.username);
@@ -144,27 +136,7 @@ app.get('/api/activities/date/:date', passport.authenticate('basic', {session: f
   })
 })
 
-//Update stats to a specific date and ID
 
-app.put('/api/activities/addtodate/:activity_id/:date', passport.authenticate('basic', {session: false}), function(req, res){
-  Activity.findOneAndUpdate({
-    activity_name: req.body.activity_name,
-    quantity: req.body.quantity,
-  }).then(activity =>{
-    res.json(activity)
-  });
-});
-
-//Delete stats for a specific day and ID
-
-app.delete('/api/activities/deletefromdate/:activity_id/:date', passport.authenticate('basic', {session: false}), function(req, res){
-  Activity.findOneAndRemove({
-    activity_name: req.body.activity_name,
-    quantity: req.body.quantity,
-  }).then(activity =>{
-    res.json(activity)
-  });
-});
 
 
 app.listen(3000);
